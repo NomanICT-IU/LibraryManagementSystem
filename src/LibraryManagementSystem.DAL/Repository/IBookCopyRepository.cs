@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using LibraryManagementSystem.DAL.Entities;
 
 namespace LibraryManagementSystem.DAL.Repository;
 
-public interface IBookCopy
+public interface IBookCopyRepository
 {
     public Task<BookCopy> CreateBookCopy(BookCopy bookCopy, CancellationToken cancellationToken);
     public Task<BookCopy> UpdateBookCopy(BookCopy bookCopy, CancellationToken cancellationToken);
@@ -12,7 +10,7 @@ public interface IBookCopy
     public Task<BookCopy> GetBookCopyById(int CopyId, CancellationToken cancellationToken);
 }
 
-public class BookCopy : IBookCopy
+public class BookCopyRepository : IBookCopyRepository
 {
     public Task<BookCopy> CreateBookCopy(BookCopy bookCopy, CancellationToken cancellationToken)
     {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LibraryManagementSystem.DAL.Entities;
+﻿namespace LibraryManagementSystem.DAL.Entities;
 
 public class Member
 {
@@ -11,6 +7,6 @@ public class Member
     public string MemberCode { get; set; }
     public string Phone { get; set; }
     public string Email { get; set; }
-    public string Adress { get; set; }
+    public string Address { get; set; }
     public bool Status { get; set; }
 }

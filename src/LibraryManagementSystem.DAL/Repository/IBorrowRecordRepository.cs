@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LibraryManagementSystem.DAL.Repository;
 
-public interface IBorrowRecord
+public interface IBorrowRecordRepository
 {
     public Task<BorrowRecord> CreateBorrowRecord(BorrowRecord borrowRecord, CancellationToken cancellationToken);
     public Task<Book> UpdateBorrowRecord(BorrowRecord borrowRecord, CancellationToken cancellationToken);
@@ -14,7 +14,7 @@ public interface IBorrowRecord
     public Task<BorrowRecord> GetBorrowRecordById(int bookId, CancellationToken cancellationToken);
 }
 
-public class BorrowRecord : IBorrowRecord
+public class BorrowRecordRepository : IBorrowRecordRepository
 {
     public Task<BorrowRecord> CreateBorrowRecord(BorrowRecord borrowRecord, CancellationToken cancellationToken)
     {
