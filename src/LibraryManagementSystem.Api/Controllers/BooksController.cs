@@ -1,6 +1,4 @@
-﻿using LibraryManagementSystem.BLL.Dtos;
-using LibraryManagementSystem.BLL.Service;
-using Microsoft.AspNetCore.Mvc;
+﻿using LibrarymanagementSystem.Shared;
 
 namespace LibraryManagementSystem.Api.Controllers
 {
@@ -19,38 +17,42 @@ namespace LibraryManagementSystem.Api.Controllers
         [HttpPost("create-book")]
         public async Task<IActionResult> CreateBook(BookDto bookDto,CancellationToken cancellationToken)
         {
-            var book = await _bookService.CreateBook(bookDto,cancellationToken);
-            var response = new
+            var book = await _bookService.CreateBookAsync(bookDto,cancellationToken);
+            return Ok(new ApiResponse<BookDto>
             {
-                IsSuccess = true,
-                Message="Book Saved Successfully",
-                Results = book
-            };
-            return Ok(response);
+                Data = book
+            });
         }
 
         [HttpGet("get-book-by-id/{bookId:int}")]
         public async Task<IActionResult> GetBookById(int bookId,CancellationToken cancellationToken)
         {
-            var book = await _bookService.GetBookById( bookId,cancellationToken);
-
-            return Ok(book);
+            var book = await _bookService.GetBookByIdAsync( bookId,cancellationToken);
+            return Ok(new ApiResponse<BookDto>
+            {
+                Data = book
+            });
         }
 
         [HttpPut("update-book")]
         public async Task<IActionResult> UpdateBook(BookDto bookDto,CancellationToken cancellationToken)
         {
-            var isUpdated= await _bookService.UpdateBook(bookDto,cancellationToken);
-
-            return Ok(isUpdated);
+            var isUpdated= await _bookService.UpdateBookAsync(bookDto,cancellationToken);
+            return Ok(new ApiResponse<bool>
+            {
+                Data=isUpdated,
+            });
         }
 
         [HttpDelete("delete-book/{bookId:int}")]
         public async Task<IActionResult> DeleteBook(int bookId,CancellationToken cancellationToken)
         {
-            var isDeleted= await _bookService.DeleteBook(bookId, cancellationToken);
+            var isDeleted= await _bookService.DeleteBookAsync(bookId, cancellationToken);
 
-            return Ok(isDeleted);
+            return Ok(new ApiResponse<bool>
+            {
+                Data = isDeleted,
+            });
         }
     }
 }

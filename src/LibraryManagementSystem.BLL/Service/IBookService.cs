@@ -1,16 +1,12 @@
-﻿using LibraryManagementSystem.BLL.Dtos;
-using LibraryManagementSystem.DAL.Entities;
-using LibraryManagementSystem.DAL.Repository;
-
-namespace LibraryManagementSystem.BLL.Service;
+﻿namespace LibraryManagementSystem.BLL.Service;
 
 public interface IBookService
 {
-    public Task<BookDto> CreateBook(BookDto book, CancellationToken cancellationToken);
-    public Task<bool> UpdateBook(BookDto book, CancellationToken cancellationToken);
-    public Task<bool> DeleteBook(int bookId, CancellationToken cancellationToken);
+    public Task<BookDto> CreateBookAsync(BookDto book, CancellationToken cancellationToken);
+    public Task<bool> UpdateBookAsync(BookDto book, CancellationToken cancellationToken);
+    public Task<bool> DeleteBookAsync(int bookId, CancellationToken cancellationToken);
 
-    public Task<BookDto> GetBookById(int bookId, CancellationToken cancellationToken);
+    public Task<BookDto> GetBookByIdAsync(int bookId, CancellationToken cancellationToken);
 }
 
 public class BookService : IBookService
@@ -20,7 +16,7 @@ public class BookService : IBookService
     {
         _bookRepository = bookRepositroy;
     }
-    public async Task<BookDto> CreateBook(BookDto bookDto, CancellationToken cancellationToken)
+    public async Task<BookDto> CreateBookAsync(BookDto bookDto, CancellationToken cancellationToken)
     {
         Book book = new Book
         {
@@ -30,14 +26,14 @@ public class BookService : IBookService
             Category = bookDto.Category
         };
 
-        book = await _bookRepository.CreateBook(book, cancellationToken);
+        book = await _bookRepository.CreateBookAsync(book, cancellationToken);
 
         return new BookDto(book.BookId, book.Title, book.Author, book.ISBN, book.Category);
     }
 
-    public async Task<bool> DeleteBook(int bookId, CancellationToken cancellationToken)
+    public async Task<bool> DeleteBookAsync(int bookId, CancellationToken cancellationToken)
     {
-        var isDeleted = await _bookRepository.DeleteBook(bookId, cancellationToken);
+        var isDeleted = await _bookRepository.DeleteBookAsync(bookId, cancellationToken);
 
         if (!isDeleted)
             throw new InvalidOperationException("Book not deleted.");
@@ -45,9 +41,9 @@ public class BookService : IBookService
         return isDeleted;
     }
 
-    public async Task<BookDto> GetBookById(int bookId, CancellationToken cancellationToken)
+    public async Task<BookDto> GetBookByIdAsync(int bookId, CancellationToken cancellationToken)
     {
-        var book = await _bookRepository.GetBookById(bookId, cancellationToken);
+        var book = await _bookRepository.GetBookByIdAsync(bookId, cancellationToken);
         if (book is null)
         {
             throw new KeyNotFoundException($"Book with ID {bookId} was not found.");
@@ -56,7 +52,7 @@ public class BookService : IBookService
 
     }
 
-    public async Task<bool> UpdateBook(BookDto bookDto, CancellationToken cancellationToken)
+    public async Task<bool> UpdateBookAsync(BookDto bookDto, CancellationToken cancellationToken)
     {
         Book book = new Book
         {
@@ -67,7 +63,7 @@ public class BookService : IBookService
             Category = bookDto.Category
         };
 
-        var isUpdated = await _bookRepository.UpdateBook(book , cancellationToken);
+        var isUpdated = await _bookRepository.UpdateBookAsync(book , cancellationToken);
 
         if (!isUpdated)
             throw new InvalidOperationException("Book not updated.");

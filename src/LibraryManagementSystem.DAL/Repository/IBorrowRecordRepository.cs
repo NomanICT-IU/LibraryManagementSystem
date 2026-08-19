@@ -1,9 +1,4 @@
-﻿using LibraryManagementSystem.DAL.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LibraryManagementSystem.DAL.Repository;
+﻿namespace LibraryManagementSystem.DAL.Repository;
 
 public interface IBorrowRecordRepository
 {

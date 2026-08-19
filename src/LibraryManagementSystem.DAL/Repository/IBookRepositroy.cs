@@ -1,16 +1,12 @@
-﻿using Dapper;
-using LibraryManagementSystem.DAL.Entities;
-using System.Data;
-
-namespace LibraryManagementSystem.DAL.Repository;
+﻿namespace LibraryManagementSystem.DAL.Repository;
 
 public interface IBookRepositroy
 {
-    public Task<Book> CreateBook(Book book, CancellationToken cancellationToken);
-    public Task<bool> UpdateBook(Book book, CancellationToken cancellationToken);
-    public Task<bool> DeleteBook(int bookId, CancellationToken cancellationToken);
+    public Task<Book> CreateBookAsync(Book book, CancellationToken cancellationToken);
+    public Task<bool> UpdateBookAsync(Book book, CancellationToken cancellationToken);
+    public Task<bool> DeleteBookAsync(int bookId, CancellationToken cancellationToken);
 
-    public Task<Book> GetBookById(int bookId, CancellationToken cancellationToken);
+    public Task<Book> GetBookByIdAsync(int bookId, CancellationToken cancellationToken);
     
 }
 
@@ -24,7 +20,7 @@ public class BookRepositroy : IBookRepositroy
     }
 
 
-    public async Task<Book> CreateBook(Book book, CancellationToken cancellationToken)
+    public async Task<Book> CreateBookAsync(Book book, CancellationToken cancellationToken)
     {
         string command = "dbo.CreateBook";
         var parameters = new DynamicParameters();
@@ -35,7 +31,7 @@ public class BookRepositroy : IBookRepositroy
         return await Connection.QuerySingleAsync<Book>(command, parameters, commandType: CommandType.StoredProcedure);
     }
 
-    public async Task<bool> DeleteBook(int bookId, CancellationToken cancellationToken)
+    public async Task<bool> DeleteBookAsync(int bookId, CancellationToken cancellationToken)
     {
         string command = "dbo.DeleteBook";
         var parameters = new DynamicParameters();
@@ -44,7 +40,7 @@ public class BookRepositroy : IBookRepositroy
         return effectedRows > 0;
     }
 
-    public async Task<Book> GetBookById(int bookId, CancellationToken cancellationToken)
+    public async Task<Book> GetBookByIdAsync(int bookId, CancellationToken cancellationToken)
     {
         string command = "dbo.GetBookById";
         var parameters = new DynamicParameters();
@@ -52,7 +48,7 @@ public class BookRepositroy : IBookRepositroy
         return await Connection.QuerySingleAsync<Book>(command, parameters, commandType: CommandType.StoredProcedure);
     }
 
-    public async Task<bool> UpdateBook(Book book, CancellationToken cancellationToken)
+    public async Task<bool> UpdateBookAsync(Book book, CancellationToken cancellationToken)
     {
         string command = "dbo.CreateBook";
         var parameters = new DynamicParameters();

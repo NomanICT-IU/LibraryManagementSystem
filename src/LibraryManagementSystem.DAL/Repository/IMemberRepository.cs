@@ -1,8 +1,4 @@
-﻿using Dapper;
-using LibraryManagementSystem.DAL.Entities;
-using System.Data;
-
-namespace LibraryManagementSystem.DAL.Repository;
+﻿namespace LibraryManagementSystem.DAL.Repository;
 
 public interface IMemberRepository
 {
@@ -36,18 +32,39 @@ public class MemberRepository : IMemberRepository
 
         return await _dbConnection.QuerySingleAsync<Member>(command, parameters, commandType: CommandType.StoredProcedure);
     }
-    public Task<bool> DeleteMember(int memberId, CancellationToken cancellationToken)
+    public async Task<bool> DeleteMember(int memberId, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var command = "dbo.DeleteMember";
+        var parameters = new DynamicParameters();
+        parameters.Add("@MemberId", memberId);
+        int effectedRows = await _dbConnection.ExecuteAsync(command, parameters, commandType: CommandType.StoredProcedure);
+        return effectedRows > 0;
     }
 
-    public Task<Member> GetMemberById(int memberId, CancellationToken cancellationToken)
+    public async Task<Member> GetMemberById(int memberId, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var command = "dbo.GetMemberById";
+        var parameters = new DynamicParameters();
+        parameters.Add("@MemberId", memberId);
+
+        return await _dbConnection.QuerySingleAsync<Member>(command, parameters, commandType: CommandType.StoredProcedure);
     }
 
-    public Task<bool> UpdateMember(Member member, CancellationToken cancellationToken)
+    public async Task<bool> UpdateMember(Member member, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var command = "dbo.UpdateMember";
+        var parameters = new DynamicParameters();
+
+        parameters.Add("@MemberId", member.MemberId);
+        parameters.Add("@Name", member.Name);
+        parameters.Add("@MemberCode", member.MemberCode);
+        parameters.Add("@Phone", member.Phone);
+        parameters.Add("@Email", member.Email);
+        parameters.Add("@Address", member.Address);
+        parameters.Add("@Status", member.Status);
+
+        int effectedRows = await _dbConnection.ExecuteAsync(command, parameters, commandType: CommandType.StoredProcedure);
+
+        return (effectedRows > 0);
     }
 }

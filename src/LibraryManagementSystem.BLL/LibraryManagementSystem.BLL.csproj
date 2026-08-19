@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Mapster" Version="10.0.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\LibrarymanagementSystem.Shared\LibrarymanagementSystem.Shared.csproj" />
     <ProjectReference Include="..\LibraryManagementSystem.DAL\LibraryManagementSystem.DAL.csproj" />
   </ItemGroup>
 

@@ -1,28 +1,11 @@
-using LibraryManagementSystem.BLL.Service;
-using LibraryManagementSystem.DAL.Repository;
-using Microsoft.Data.SqlClient;
-using Microsoft.OpenApi;
-using System.Data;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
 
-builder.Services.AddScoped<IDbConnection>(sp =>
-{
-    var configuration = sp.GetRequiredService<IConfiguration>();
 
-    return new SqlConnection(
-        configuration.GetConnectionString("DefaultConnection")
-    );
-});
-
-builder.Services.AddScoped<IBookRepositroy, BookRepositroy>();
-builder.Services.AddScoped<IBookService, BookService>();
-
-builder.Services.AddScoped<IMemberRepository, MemberRepository>();
-builder.Services.AddScoped<IMemberService,MemberService>();
+builder.Services.AddApplicationDallServices(builder.Configuration.GetConnectionString("DefaultConnection"));
+builder.Services.AddApplicationServices();
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();

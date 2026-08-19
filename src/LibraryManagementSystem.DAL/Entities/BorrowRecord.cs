@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LibraryManagementSystem.DAL.Entities;
+﻿namespace LibraryManagementSystem.DAL.Entities;
 
 public class BorrowRecord
 {

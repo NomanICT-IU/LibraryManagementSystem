@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/src/">
+    <Project Path="LibrarymanagementSystem.Shared/LibrarymanagementSystem.Shared.csproj" Id="38f166c6-538a-4bf1-b479-dce09b7be46a" />
     <Project Path="src/LibraryManagementSystem.Api/LibraryManagementSystem.Api.csproj" />
     <Project Path="src/LibraryManagementSystem.BLL/LibraryManagementSystem.BLL.csproj" />
     <Project Path="src/LibraryManagementSystem.DAL/LibraryManagementSystem.DAL.csproj" />
