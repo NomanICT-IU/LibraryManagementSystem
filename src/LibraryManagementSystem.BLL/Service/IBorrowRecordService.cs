@@ -35,17 +35,28 @@ public class BorrowRecordService : IBorrowRecordService
     {
         var IsDeleted = await _borrowRecordRepository.DeleteBorrowBookAsync(borrowId, cancellationToken);
         if (!IsDeleted)
-                throw new InvalidOperationException("Borrowed record not deleted.");
+            throw new InvalidOperationException("Borrowed record not deleted.");
         return IsDeleted;
     }
 
-    public Task<BorrowRecordDto> GetBorrowRecordByIdAsync(int borrowId, CancellationToken cancellationToken)
+    public async Task<BorrowRecordDto> GetBorrowRecordByIdAsync(int borrowId, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var borrowRecord = await _borrowRecordRepository.GetBorrowRecordByIdAsync(borrowId, cancellationToken);
+
+        var borrowRecordDto = borrowRecord.Adapt<BorrowRecordDto>();
+        borrowRecordDto.BorrowId = borrowId;
+
+        return borrowRecordDto;
     }
 
-    public Task<bool> UpdateBorrowRecordAsync(BorrowRecordDto borrowRecordDto, CancellationToken cancellationToken)
+    public async Task<bool> UpdateBorrowRecordAsync(BorrowRecordDto borrowRecordDto, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var borrowRecord = borrowRecordDto.Adapt<BorrowRecord>();
+
+        var isUpdated = await _borrowRecordRepository.UpdateBorrowRecordAsync(borrowRecord, cancellationToken);
+
+        if (!isUpdated)
+            throw new InvalidOperationException("Borrowed record not Updated.");
+        return isUpdated;
     }
 }

@@ -37,7 +37,7 @@ public class BorrowRecordRepository : IBorrowRecordRepository
         var parameters = new DynamicParameters();
 
         parameters.Add("@BorrowId", borrowId);
-        
+
         int effectedRows = await _dbConnection.ExecuteAsync(command, parameters, commandType: CommandType.StoredProcedure);
 
         return (effectedRows > 0);
@@ -52,8 +52,19 @@ public class BorrowRecordRepository : IBorrowRecordRepository
         return await _dbConnection.QuerySingleAsync<BorrowRecord>(command, parameters, commandType: CommandType.StoredProcedure);
     }
 
-    public Task<bool> UpdateBorrowRecordAsync(BorrowRecord borrowRecord, CancellationToken cancellationToken)
+    public async Task<bool> UpdateBorrowRecordAsync(BorrowRecord borrowRecord, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var command = "dbo.UpdateBorrowRecord";
+        var parameters = new DynamicParameters();
+        parameters.Add("@BorrowId", borrowRecord.BorrowId);
+        parameters.Add("@CopyId", borrowRecord.CopyId);
+        parameters.Add("@MemberId", borrowRecord.MemberId);
+        parameters.Add("@IssueDate", borrowRecord.IssueDate);
+        parameters.Add("@DueDate", borrowRecord.DueDate);
+
+        int effectedRows = await _dbConnection.ExecuteAsync(command, parameters, commandType: CommandType.StoredProcedure);
+        return effectedRows > 0;
+
+
     }
 }

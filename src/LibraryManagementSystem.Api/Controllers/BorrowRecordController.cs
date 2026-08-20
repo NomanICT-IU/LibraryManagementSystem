@@ -35,4 +35,36 @@ public class BorrowRecordController : ControllerBase
             StatusCode = StatusCodes.Status200OK
         });
     }
+
+    [HttpGet("get-borrow-record-by-id/{borrowId:int}")]
+    public async Task<IActionResult> GetBorrowRecordByIdAsync(int borrowId, CancellationToken cancellationToken)
+    {
+        var borrowRecord = await _borrowRecordService.GetBorrowRecordByIdAsync(borrowId, cancellationToken);
+
+
+        return Ok(new ApiResponse<BorrowRecordDto>
+        {
+
+            Data = borrowRecord,
+            StatusCode = StatusCodes.Status200OK
+
+        });
+
+    }
+    [HttpPut("update-borrow-record")]
+    public async Task<IActionResult> UpdateBorrowRecordAsync(BorrowRecordDto borrowRecordDto, CancellationToken cancellationToken)
+    {
+        var isUpdated = await _borrowRecordService.UpdateBorrowRecordAsync(borrowRecordDto, cancellationToken);
+
+        return Ok(new ApiResponse<bool>
+        {
+            Data = isUpdated,
+            StatusCode = StatusCodes.Status200OK
+        });
+    }
+
+
+
+
+
 }
