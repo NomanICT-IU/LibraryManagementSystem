@@ -10,9 +10,9 @@
             });
 
             services.AddScoped<IBookRepositroy, BookRepositroy>();
-
             services.AddScoped<IMemberRepository, MemberRepository>();
             services.AddScoped<IBookCopyRepository, BookCopyRepository>();
+            services.AddScoped<IBorrowRecordRepository, BorrowRecordRepository>();
 
 
             return services;

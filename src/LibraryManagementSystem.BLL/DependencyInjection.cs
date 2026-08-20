@@ -7,6 +7,7 @@
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IMemberService, MemberService>();
             services.AddScoped<IBookCopyService, BookCopyService>();
+            services.AddScoped<IBorrowRecordService, BorrowRecordService>();
 
             return services;
 
