@@ -1,10 +1,24 @@
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllers();
+// Serilog
+builder.Services.AddSerilog((services, loggerConfiguration) =>
+{
+    loggerConfiguration
+        .ReadFrom.Configuration(builder.Configuration)
+        .ReadFrom.Services(services);
+});
 
+// Controllers
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<GlobalValidationFilter>();
+});
 
-builder.Services.AddApplicationDallServices(builder.Configuration.GetConnectionString("DefaultConnection"));
+// Application Services
+builder.Services.AddApplicationDallServices(
+    builder.Configuration.GetConnectionString("DefaultConnection"));
+
 builder.Services.AddApplicationServices();
 
 // Swagger
@@ -22,7 +36,12 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Custom Exception Handler
+app.UseMiddleware<CustomExceptionHandler>();
+
+// Serilog request logging
+app.UseSerilogRequestLogging();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

@@ -63,6 +63,18 @@ public class BorrowRecordController : ControllerBase
         });
     }
 
+    [HttpGet("Borrow-details-by-id/{borrowId:int}")]
+    public async Task<IActionResult> IssueDetailsByBorrowedId(int borrowId, CancellationToken cancellationToken)
+    {
+        var borrowDetails = await _borrowRecordService.IssueDetailsByBorrowedId(borrowId, cancellationToken);
+        return Ok(new ApiResponse<BorrowDetailsDto>
+        {
+            Data = borrowDetails,
+            StatusCode = StatusCodes.Status200OK
+        });
+
+    }
+
 
 
 

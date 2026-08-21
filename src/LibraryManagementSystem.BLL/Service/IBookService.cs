@@ -1,4 +1,6 @@
-﻿namespace LibraryManagementSystem.BLL.Service;
+﻿using LibrarymanagementSystem.Shared;
+
+namespace LibraryManagementSystem.BLL.Service;
 
 public interface IBookService
 {
@@ -7,6 +9,8 @@ public interface IBookService
     public Task<bool> DeleteBookAsync(int bookId, CancellationToken cancellationToken);
 
     public Task<BookDto> GetBookByIdAsync(int bookId, CancellationToken cancellationToken);
+
+    public Task<IEnumerable<BookSearchDetailDto>> SearchBooksAsync(string searchBy, string searchText, CancellationToken cancellationToken);
 }
 
 public class BookService : IBookService
@@ -15,6 +19,13 @@ public class BookService : IBookService
     public BookService(IBookRepositroy bookRepositroy)
     {
         _bookRepository = bookRepositroy;
+    }
+
+    public async Task<IEnumerable<BookSearchDetailDto>> SearchBooksAsync(string searchBy, string searchText, CancellationToken cancellationToken)
+    {
+        var results = await _bookRepository.SearchBooksAsync(searchBy, searchText, cancellationToken);
+
+        return results.Adapt<IEnumerable<BookSearchDetailDto>>(); 
     }
     public async Task<BookDto> CreateBookAsync(BookDto bookDto, CancellationToken cancellationToken)
     {
@@ -36,7 +47,7 @@ public class BookService : IBookService
         var isDeleted = await _bookRepository.DeleteBookAsync(bookId, cancellationToken);
 
         if (!isDeleted)
-            throw new InvalidOperationException("Book not deleted.");
+            throw new InvalidException("Book not deleted.");
 
         return isDeleted;
     }
@@ -46,11 +57,13 @@ public class BookService : IBookService
         var book = await _bookRepository.GetBookByIdAsync(bookId, cancellationToken);
         if (book is null)
         {
-            throw new KeyNotFoundException($"Book with ID {bookId} was not found.");
+            throw new NotFoundException($"Book with ID {bookId} was not found.");
         }
         return new BookDto(book.BookId, book.Title, book.Author, book.ISBN, book.Category);
 
     }
+
+
 
     public async Task<bool> UpdateBookAsync(BookDto bookDto, CancellationToken cancellationToken)
     {

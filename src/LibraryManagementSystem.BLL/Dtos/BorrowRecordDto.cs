@@ -1,4 +1,6 @@
-﻿namespace LibraryManagementSystem.BLL.Dtos;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace LibraryManagementSystem.BLL.Dtos;
 
 public class BorrowRecordDto
 {

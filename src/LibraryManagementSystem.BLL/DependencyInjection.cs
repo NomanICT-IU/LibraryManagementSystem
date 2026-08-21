@@ -1,4 +1,7 @@
-﻿namespace LibraryManagementSystem.BLL
+﻿using FluentValidation;
+using LibraryManagementSystem.BLL.Validators;
+
+namespace LibraryManagementSystem.BLL
 {
     public static class DependencyInjection
     {
@@ -8,8 +11,8 @@
             services.AddScoped<IMemberService, MemberService>();
             services.AddScoped<IBookCopyService, BookCopyService>();
             services.AddScoped<IBorrowRecordService, BorrowRecordService>();
-            services.AddScoped<IMemberSearchService, MemberSearchService>();
 
+            services.AddValidatorsFromAssemblyContaining<BookDtoValidator>();
             return services;
 
         }

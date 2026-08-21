@@ -5,3 +5,8 @@ global using LibraryManagementSystem.BLL.Dtos;
 global using LibraryManagementSystem.BLL.Service;
 global using Microsoft.AspNetCore.Mvc;
 global using LibrarymanagementSystem.Shared;
+global using FluentValidation;
+global using Microsoft.AspNetCore.Mvc.Filters;
+global using LibraryManagementSystem.Api.Exceptions;
+global using LibraryManagementSystem.Api.Filter;
+global using Serilog;

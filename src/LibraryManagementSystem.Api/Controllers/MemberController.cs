@@ -49,4 +49,18 @@ public class MemberController : ControllerBase
             Data = isUpdated,
         });
     }
+
+    [HttpGet("search-members")]
+    public async Task<IActionResult> SearchMember(
+       [FromQuery] string searchText,
+       CancellationToken cancellationToken)
+    {
+        var member = await _memberService
+            .SearchMember(searchText, cancellationToken);
+        return Ok(new ApiResponse<MemberSearchDto>
+        {
+            Data = member,
+            StatusCode = StatusCodes.Status200OK
+        });
+    }
 }

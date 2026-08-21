@@ -1,0 +1,11 @@
+﻿CREATE TABLE [dbo].[Book] (
+    [BookId]   INT            IDENTITY (1, 1) NOT NULL,
+    [Title]    NVARCHAR (255) NOT NULL,
+    [Author]   NVARCHAR (100) NOT NULL,
+    [ISBN]     NVARCHAR (50)  NOT NULL,
+    [Category] NVARCHAR (50)  NOT NULL,
+    CONSTRAINT [PK_Book] PRIMARY KEY CLUSTERED ([BookId] ASC),
+    CONSTRAINT [UQ_Book_ISBN] UNIQUE NONCLUSTERED ([ISBN] ASC),
+    CONSTRAINT [UQ_Book_Title] UNIQUE NONCLUSTERED ([Title] ASC)
+);
+

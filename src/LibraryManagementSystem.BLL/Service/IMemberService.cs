@@ -8,6 +8,7 @@ public interface IMemberService
     public Task<bool> UpdateMemberAsync(MemberDto memberDto, CancellationToken cancellationToken);
     public Task<bool> DeleteMemberAsync(int memberId, CancellationToken cancellationToken);
     public Task<MemberDto> GetMemberByIdAsync(int memberId, CancellationToken cancellationToken);
+    public Task<MemberSearchDto> SearchMember(string searchText, CancellationToken cancellationToken);
 }
 
 public class MemberService : IMemberService
@@ -20,15 +21,7 @@ public class MemberService : IMemberService
     }
     public async Task<MemberDto> CreateMemberAsync(MemberDto memberDto, CancellationToken cancellationToken)
     {
-        //Member member = new Member
-        //{
-        //    Name = memberDto.Name,
-        //    MemberCode = memberDto.MemberCode,
-        //    Phone = memberDto.Phone,
-        //    Email = memberDto.Email,
-        //    Address = memberDto.Address,
-        //    Status = memberDto.Status
-        //};
+        
 
         var member = memberDto.Adapt<Member>();
 
@@ -57,17 +50,15 @@ public class MemberService : IMemberService
 
         var memberDto= member.Adapt<MemberDto>();
         return memberDto;
-        //return new MemberDto
-        //{
-        //    MemberId = member.MemberId,
-        //    Name = member.Name,
-        //    MemberCode = member?.MemberCode,
-        //    Phone = member.Phone,
-        //    Email = member.Email,
-        //    Address = member.Address,
-        //    Status = member.Status,
-        //};
 
+    }
+
+    public async Task<MemberSearchDto> SearchMember(string searchText, CancellationToken cancellationToken)
+    {
+        var member = await _memberRepository.SearchMember(searchText, cancellationToken);
+
+        var memberDto = member.Adapt<MemberSearchDto>();
+        return memberDto;
     }
 
     public async Task<bool> UpdateMemberAsync(MemberDto memberDto, CancellationToken cancellationToken)

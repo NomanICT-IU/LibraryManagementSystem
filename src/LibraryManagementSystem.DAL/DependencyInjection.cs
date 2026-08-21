@@ -13,8 +13,6 @@
             services.AddScoped<IMemberRepository, MemberRepository>();
             services.AddScoped<IBookCopyRepository, BookCopyRepository>();
             services.AddScoped<IBorrowRecordRepository, BorrowRecordRepository>();
-            services.AddScoped<IMemberSearchRepository, MemberSearchRepository>();
-
 
             return services;
 
